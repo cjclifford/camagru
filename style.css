@@ -1,0 +1,137 @@
+@font-face {
+	font-family: "Billabong";
+	src: url("resources/fonts/Billabong.ttf");
+}
+
+@font-face {
+	font-family: "Mission Script";
+	src: url("resources/fonts/Mission-Script.otf");
+}
+
+body {
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+#container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+#header {
+	display: block;
+	border-bottom: 1px solid black;
+	box-shadow: 0 3px 5px gray;
+	position: fixed;
+	width: 100%;
+	background-color: whitesmoke;
+	z-index: 1;
+}
+#header-container {
+	display: flex;
+	padding: 0 15px;
+	height: 44px;
+	justify-content: center;
+	align-items: center;
+}
+#header-name {
+	font-family: Billabong,Mission Script;
+	display: block;
+	font-size: 30px;
+	cursor: pointer;
+}
+.navbar {
+	display: flex;
+	position: absolute;
+	list-style: none;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	right: 0;
+}
+.cta-button {
+	font-size: 16px;
+	text-align: center;
+	background-color: lightgreen;
+	border-radius: 0.3rem;
+	border-style: none;
+	width: 100px;
+	height: 100%;
+	margin: 0 2px;
+	opacity: 0.8;
+	min-height: 40px;
+}
+.cta-button:hover {
+	opacity: 1;
+}
+#content {
+	display: flex;
+	position: absolute;
+	width: 70%;
+	top: 44px;
+	justify-content: center;
+}
+.post-container {
+	width: 100%;
+}
+.post-header {
+	display: flex;
+	width: 100%;
+	height: 50px;
+	background-color: whitesmoke;
+	align-items: center;
+}
+.profile-image {
+	border-radius: 50%;
+	margin: 0 10px;
+	height: 80%;
+}
+.post-content {
+	display: flex;
+	width: 100%;
+}
+.post-image {
+	display: inline-block;
+	width: 100%;
+}
+.post-comments {
+	display: inline-block;
+	width: 100%;
+	background-color: whitesmoke;
+}
+.post-options {
+	width: 100%;
+	height: 44px;
+	background-color: whitesmoke;
+}
+.option-container {
+	text-align: center;
+	border: 1px solid black;
+	border-radius: 10px;
+	padding: 20px;
+	margin: 20px;
+	width: 25vw;
+	background-color: whitesmoke;
+	height: 100%;
+}
+.user-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.input-text {
+	margin: 10px 0;
+	padding: 5px 6px;
+	width: 100%;
+}
+.rsp {
+	display: none;
+	color: lightcoral;
+	font-size: 11px;
+	padding: 3px 0;
+}
+#webcam {
+	transform: scale(-1, 1);
+}
