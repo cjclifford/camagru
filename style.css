@@ -27,6 +27,7 @@ body {
 	width: 100%;
 	background-color: whitesmoke;
 	z-index: 1;
+	/* padding: 6px 0; */
 }
 #header-container {
 	display: flex;
@@ -49,6 +50,8 @@ body {
 	margin: 0;
 	padding: 0;
 	right: 0;
+	justify-content: center;
+	align-items: center;
 }
 .cta-button {
 	font-size: 16px;
@@ -63,6 +66,7 @@ body {
 	min-height: 40px;
 }
 .cta-button:hover {
+	cursor: pointer;
 	opacity: 1;
 }
 #content {
@@ -82,7 +86,7 @@ body {
 	background-color: whitesmoke;
 	align-items: center;
 }
-.profile-image {
+.circle-image {
 	border-radius: 50%;
 	margin: 0 10px;
 	height: 80%;
@@ -127,11 +131,21 @@ body {
 	width: 100%;
 }
 .rsp {
-	display: none;
 	color: lightcoral;
 	font-size: 11px;
 	padding: 3px 0;
 }
 #webcam {
 	transform: scale(-1, 1);
+}
+.image-link {
+	cursor: pointer; 
+}
+.noselect {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }

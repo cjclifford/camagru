@@ -1,9 +1,13 @@
-var video = document.querySelector('#webcam');
+function loadCamera() {
+	var video = document.querySelector('#webcam');
 
-if (navigator.mediaDevices.getUserMedia)
-{
-	navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream)
-	{
-		video.srcObject = stream;
-	});
+	if (navigator.mediaDevices.getUserMedia) {
+		navigator.mediaDevices.getUserMedia({ video: true })
+		.then(function (stream)	{
+			video.srcObject = stream;
+		})
+		.catch(function(err0r) {
+			console.log("Error: Could not load webcam.");
+		});
+	}
 }

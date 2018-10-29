@@ -3,4 +3,4 @@
 $DB_HOST = "127.0.0.1";
 $DB_NAME = "db_camagru";
 $DB_USER = "root";
-$DB_PASSWORD = "pass42";
+$DB_PASSWORD = "";
