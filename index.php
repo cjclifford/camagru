@@ -13,6 +13,7 @@ require_once('header.php');
 	<link rel="stylesheet" type="text/css" href="style.css?"<?php echo time(); ?> />
 	<script src="load_content.js"></script>
 	<script src="auth.js"></script>
+	<script src="post_action.js"></script>
 </head>
 <body>
 	<div id="container">
