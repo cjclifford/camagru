@@ -22,15 +22,16 @@ function snapshot() {
 }
 
 function upload() {
-	var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-	var link = document.createElement('a');
-	link.setAttribute('href', img);
+	var img = canvas.toDataURL();
+	// var link = document.createElement('a');
+	// link.setAttribute('href', img);
+	// link.click();
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200)
 			console.log(this.responseText);
 	}
 	xhttp.open('POST', 'upload.php');
-	xhttp.send('img='+img);
-	link.click();
+	xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhttp.send('imageData=' + escape(img));
 }
