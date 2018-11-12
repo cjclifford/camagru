@@ -1,10 +1,14 @@
 <?php
+$to = $_POST['to'];
+$subject = $_POST['subject'];
+$txt = $_POST['txt'];
+$headers = "From: a@rsvhr.com" . "\r\n";
 
-error_reporting(-1);
-ini_set('display_errors', 'On');
-set_error_handler("var_dump");
+try {
+	mail($to,$subject,$txt,$headers);
+}
+catch(Exception $e) {
+	echo "Error sending email: " . $e->getMessage();
+}
 
-if (mail("cliffordcuan@gmail.com", "Test Subject", "Test Content"))
-	echo "success";
-else
-	echo "failure";
+?>

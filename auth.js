@@ -77,12 +77,17 @@ function validate_signup() {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				if (this.responseText == 'false') {
-					for (i = 0; i < errors.length; i++)
-						document.getElementById('rsp-username').innerHTML = "Username taken";
+				var response = this.responseText;
+				if (response == "1" || response == "2") {
+					document.getElementById('rsp-username').innerHTML = "Username taken";
 				}
-				else
-					location.reload();
+				if (response == "1" || response == "3") {
+					document.getElementById('rsp-email').innerHTML = "Email already in use";
+				}
+				if (response == "0") {
+					send_verification_email(email);
+					loadDoc('verify');
+				}
 			}
 		};
 		xhttp.open("POST", "signup.php", true);
@@ -92,11 +97,46 @@ function validate_signup() {
 	}
 }
 
+function send_verification_email(email) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			console.log(this.responseText);
+		}
+	}
+	xhttp.open("POST", "mail.php", true);
+	var code = Math.random().toString(36).toUpperCase().substr(2,6);
+
+	var expireDate = new Date();
+	expireDate.setMinutes(expireDate.getMinutes + 1);
+
+	document.cookie = "code="+code+";expires="+expireDate.toUTCString+";";
+	var params = 'to=' + email + '&subject=Verification Code&txt=' + code;
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send(params);
+}
+
+function validate_user() {
+	var cookies = document.cookie;
+	var cookieArray = cookies.split(';');
+	var code = document.getElementById('verification').value;
+	if (code == cookieArray[0].split('=')[1]) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			console.log(this.responseText);
+		}
+		xhttp.open("POST", "signup.php", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("verified=true");
+	}
+	else
+		document.getElementById('rsp-code').innerHTML = "Incorrect verification code";
+}
+
 function validate_login() {
 	var username = document.getElementById('login-username').value;
 	var password = document.getElementById('login-password').value;
 
-	document.getElementById('rsp-login').innerHTML = "";
 
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {

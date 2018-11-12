@@ -2,29 +2,50 @@
 
 session_start();
 
-$firstname = $_POST['firstname'];
-$lastname = $_POST['lastname'];
-$email = $_POST['email'];
-$username = $_POST['username'];
-$password = $_POST['password'];
+if (!isset($GLOBALS['firstname'])) {
+	echo 'setting firstname global';
+	$GLOBALS['firstname'] = $_POST['firstname'];
+}
+if (!isset($GLOBALS['lastname']))
+	$GLOBALS['lastname'] = $_POST['lastname'];
+if (!isset($GLOBALS['email']))
+	$GLOBALS['email'] = $_POST['email'];
+if (!isset($GLOBALS['username']))
+	$GLOBALS['username'] = $_POST['username'];
+if (!isset($GLOBALS['password']))
+	$GLOBALS['password'] = $_POST['password'];
+$verified = $_POST['verified'];
 
 require_once('config/database.php');
 
 $stmt = $dbh->prepare("SELECT COUNT(`username`) FROM `users` WHERE `username` = :username;");
 $stmt->bindParam(':username', $username);
 $stmt->execute();
-$count = $stmt->fetch()[0];
-if ($count == 0) {
+$username_count = $stmt->fetch()[0];
+
+$stmt = $dbh->prepare("SELECT COUNT(`email`) FROM `users` WHERE `email` = :email;");
+$stmt->bindParam(':email', $email);
+$stmt->execute();
+$email_count = $stmt->fetch()[0];
+
+if ($verified == "true") {
+	print_r($GLOBALS);
 	$hash = hash('sha256', $password);
 	$stmt = $dbh->prepare("INSERT INTO `users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES (:firstname, :lastname, :username, :email, :password);");
-	$stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
-	$stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
-	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
-	$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+	$stmt->bindParam(':firstname', $GLOBALS['firstname'], PDO::PARAM_STR);
+	$stmt->bindParam(':lastname', $GLOBALS['lastname'], PDO::PARAM_STR);
+	$stmt->bindParam(':username', $GLOBALS['username'], PDO::PARAM_STR);
+	$stmt->bindParam(':email', $GLOBALS['email'], PDO::PARAM_STR);
 	$stmt->bindParam(':password', $hash, PDO::PARAM_STR);
 	$stmt->execute();
-	$_SESSION['user'] = $username;
-	echo 'true';
+	$_SESSION['user'] = $GLOBALS['username'];
 }
-else
-	echo 'false';
+
+if ($username_count == 0 && $email_count == 0)
+	echo '0';
+else if ($username_count != 0 && $email_count != 0)
+	echo '1';
+else if ($username_count != 0)
+	echo '2';
+else if ($email_count != 0)
+	echo '3';

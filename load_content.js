@@ -15,6 +15,8 @@ function loadDoc(file) {
 			xhttp.open("GET", "get_file.php?page=sign_up.html", true);
 		else if (file == "login")
 			xhttp.open("GET", "get_file.php?page=log_in.html", true);
+		else if (file == "verify")
+			xhttp.open("GET", "get_file.php?page=verify_email.html", true);
 		else
 			xhttp.open("GET", "gallery.php", true);
 		xhttp.send();

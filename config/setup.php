@@ -74,12 +74,12 @@ $stmt->execute();
 $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('cuan', 'clifford', 'ccliffor', 'ccliffor@student.wethinkcode.com', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');");
 $stmt->execute();
 
-$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post.png', 1);");
-$stmt->execute();
-$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/1280x760.png', 1);");
-$stmt->execute();
-$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post.png', 1);");
-$stmt->execute();
+// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post.png', 1);");
+// $stmt->execute();
+// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/1280x760.png', 1);");
+// $stmt->execute();
+// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post.png', 1);");
+// $stmt->execute();
 
 // $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`comments` (`comment`, `fk_id_user`, `fk_id_post`) VALUES ('comment1', 1, 1);");
 // $stmt->execute();

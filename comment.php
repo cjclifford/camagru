@@ -3,7 +3,7 @@
 session_start();
 require_once('config/database.php');
 
-if (isset($_POST['id_post']) && isset($_POST['comment'])) {
+if (isset($_SESSION['user']) && isset($_POST['id_post']) && isset($_POST['comment'])) {
 	$stmt = $dbh->prepare("SELECT `id_user` FROM `users` WHERE `username` = :username;");
 	$stmt->bindParam(':username', $_SESSION['user']);
 	$stmt->execute();
@@ -15,3 +15,9 @@ if (isset($_POST['id_post']) && isset($_POST['comment'])) {
 	$stmt->bindParam(':id_post', $_POST['id_post']);
 	$stmt->execute();
 }
+if (!isset($_SESSION['user'])) {
+	echo 'not logged in';
+// 	loadDoc('signup');
+}
+else
+	echo 'logged in';
