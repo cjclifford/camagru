@@ -88,11 +88,12 @@ function validate_signup() {
 					send_verification_email(email);
 					loadDoc('verify');
 				}
+				console.log(response);
 			}
 		};
 		xhttp.open("POST", "signup.php", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		var params = 'firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&email=' + email + '&password=' + password;
+		var params = 'firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&email=' + email + '&password=' + password + '&store=true';
 		xhttp.send(params);
 	}
 }
@@ -101,7 +102,8 @@ function send_verification_email(email) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			console.log(this.responseText);
+			if (this.responseText != null)
+				console.log(this.responseText);
 		}
 	}
 	xhttp.open("POST", "mail.php", true);
@@ -118,12 +120,16 @@ function send_verification_email(email) {
 
 function validate_user() {
 	var cookies = document.cookie;
-	var cookieArray = cookies.split(';');
+	var cookieCode = cookies.split(';')[0].split('=')[1];
 	var code = document.getElementById('verification').value;
-	if (code == cookieArray[0].split('=')[1]) {
+	if (code == cookieCode) {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
-			console.log(this.responseText);
+			if (this.readyState == 4 && this.status == 200) {
+				if (this.responseText != null)
+					console.log(this.responseText);
+				location.reload();
+			}
 		}
 		xhttp.open("POST", "signup.php", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
