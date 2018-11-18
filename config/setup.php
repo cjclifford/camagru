@@ -1,6 +1,8 @@
 <?php
 
 require_once('config.php');
+foreach (glob('../resources/posts/*') as $path)
+	unlink($path);
 
 /*
 ** Connect to host
@@ -32,7 +34,8 @@ $stmt = "CREATE TABLE IF NOT EXISTS `$DB_NAME`.`users` (
 	`lastname` VARCHAR(255) NOT NULL,
 	`username` VARCHAR(255) NOT NULL UNIQUE,
 	`email` VARCHAR(255) NOT NULL,
-	`password` VARCHAR(255) NOT NULL
+	`password` VARCHAR(255) NOT NULL,
+	`notify` INT NOT NULL DEFAULT 1
 );";
 $dbh->exec($stmt);
 
@@ -68,29 +71,38 @@ $stmt = "CREATE TABLE IF NOT EXISTS `$DB_NAME`.`likes` (
 );";
 $dbh->exec($stmt);
 
-// make some test users, posts, likes, and comments
+/*
+** Stickers Table
+*/
+$stmt = "CREATE TABLE IF NOT EXISTS `$DB_NAME`.`stickers` (
+	`id_sticker` INT PRIMARY KEY AUTO_INCREMENT,
+	`sticker_path` VARCHAR(255)
+);";
+$dbh->exec($stmt);
+
+// make some test users
 $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('mickey', 'mouse', 'mmouse', 'mmouse@clubhouse.com', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');");
 $stmt->execute();
 $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('cuan', 'clifford', 'ccliffor', 'ccliffor@student.wethinkcode.com', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');");
 $stmt->execute();
 
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post.png', 1);");
-// $stmt->execute();
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/1280x760.png', 1);");
-// $stmt->execute();
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post.png', 1);");
-// $stmt->execute();
+// make some stickers
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`stickers` (`sticker_path`) VALUES ('resources/stickers/overlay_crown.png');");
+$stmt->execute();
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`stickers` (`sticker_path`) VALUES ('resources/stickers/overlay_cutie.png');");
+$stmt->execute();
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`stickers` (`sticker_path`) VALUES ('resources/stickers/overlay_fu.png');");
+$stmt->execute();
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`stickers` (`sticker_path`) VALUES ('resources/stickers/overlay_idc.png');");
+$stmt->execute();
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`stickers` (`sticker_path`) VALUES ('resources/stickers/overlay_wow.png');");
+$stmt->execute();
 
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`comments` (`comment`, `fk_id_user`, `fk_id_post`) VALUES ('comment1', 1, 1);");
+// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post-1.png', 1);");
 // $stmt->execute();
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`comments` (`comment`, `fk_id_user`, `fk_id_post`) VALUES ('comment2', 1, 1);");
+// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post-2.png', 2);");
 // $stmt->execute();
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`comments` (`comment`, `fk_id_user`, `fk_id_post`) VALUES ('comment3', 1, 1);");
-// $stmt->execute();
-
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`likes` (`fk_id_post`, `fk_id_user`) VALUES (1, 1);");
-// $stmt->execute();
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`likes` (`fk_id_post`, `fk_id_user`) VALUES (3, 1);");
+// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-test-post-3.png', 1);");
 // $stmt->execute();
 
 session_start();

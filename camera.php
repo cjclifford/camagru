@@ -23,14 +23,19 @@ require_once('header.php');
 		</div>
 		<div id="content">
 			<div id="editor-container" class="content-box">
-				<video id="webcam" autoplay="true"></video>
+				<div id="sticker-preview"></div>
+				<div id="preview-wrapper">
+					<video id="webcam" autoplay="true"></video>
+					<img id="sticker-overlay" src="">
+				</div>
 				<button id="capture-button" onclick="snapshot()"></button>
 				<button class="cta-button" onclick="upload()">Upload</button>
+				<input id="file-upload" type="file" accepts="image/*" />
 				<canvas id="snapshot" width="640" height="480"></canvas>
 				<script src="camera.js"></script>
 			</div>
 		</div>
-		<div id="footer"></div>
+		<div id="footer">© Cuan Clifford</div>
 	</div>
 </body>
 </html>

@@ -14,7 +14,6 @@ if (isset($_POST['store'])) {
 	$_SESSION['email'] = $_POST['email'];
 	$_SESSION['password'] = $_POST['password'];
 }
-else print_r($_POST);
 
 if (isset($_POST['verified']))
 	$verified = $_POST['verified'];

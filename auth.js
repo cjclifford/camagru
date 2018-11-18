@@ -88,7 +88,6 @@ function validate_signup() {
 					send_verification_email(email);
 					loadDoc('verify');
 				}
-				console.log(response);
 			}
 		};
 		xhttp.open("POST", "signup.php", true);

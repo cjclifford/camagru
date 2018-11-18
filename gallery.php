@@ -60,4 +60,3 @@ foreach ($posts as $post) {
 	$html .= $xml->saveHTML();
 }
 echo $html;
-// print_r($posts);

@@ -23,8 +23,9 @@ require_once('header.php');
 				<?php load_header(); ?>
 			</div>
 		</div>
-		<div id="content" onload="loadDoc()"></div>
-		<div id="footer"></div>
+		<div id="content"></div>
+		<script>loadDoc();</script>
+		<div id="footer">© Cuan Clifford</div>
 	</div>
 </body>
 </html>

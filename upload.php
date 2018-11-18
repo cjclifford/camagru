@@ -1,10 +1,25 @@
 <?php
 
+function superimpose($image, $sticker) {
+	$sticker = imagecreatefrompng($sticker);
+	imagealphablending($image, true);
+	imagesavealpha($image, true);
+	imagesavealpha($sticker, true);
+	$sticker = imagescale($sticker, 640, 480);
+	imagecopy($image, $sticker, 0, 0, 0, 0, 640, 480);
+	return $image;
+}
+
 if (isset($_POST['imageData'])) {
 	$image = str_replace('data:image/png;base64,', '', $_POST['imageData']);
 	$image = str_replace(' ', '+', $image);
 	$image = base64_decode($image);
 	$image = imagecreatefromstring($image);
+	if (isset($_POST['webcam']))
+		imageflip($image, IMG_FLIP_HORIZONTAL);
+
+	if (isset($_POST['sticker']))
+		$image = superimpose($image, $_POST['sticker']);
 
 	session_start();
 	require_once('config/database.php');
