@@ -32,9 +32,16 @@ foreach ($posts as $post) {
 
 	$xml->getElementById('post')->setAttribute('id', $post['id_post']);
 
+	$element = $xml->getElementById('timestamp');
+	$fragment = $xml->createDocumentFragment();
+	$fragment->appendXML(date('d F Y', strtotime($post['timestamp'])));
+	$element->appendChild($fragment);
+
 	$element = $xml->getElementById('likes');
 	$fragment = $xml->createDocumentFragment();
-	$fragment->appendXML($post['like_count']);
+	$fragment->appendXML($post['like_count']." like");
+	if ($post['like_count'] != 1)
+		$fragment->appendXML("s");
 	$element->appendChild($fragment);
 
 	$element = $xml->getElementById('post-comments');

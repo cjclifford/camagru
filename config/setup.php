@@ -83,7 +83,7 @@ $dbh->exec($stmt);
 // make some test users
 $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('mickey', 'mouse', 'mmouse', 'mmouse@clubhouse.com', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');");
 $stmt->execute();
-$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('cuan', 'clifford', 'ccliffor', 'ccliffor@student.wethinkcode.com', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');");
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('cuan', 'clifford', 'ccliffor', 'ccliffor@student.wethinkcode.com', '5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8');");
 $stmt->execute();
 
 // make some stickers

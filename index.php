@@ -20,7 +20,7 @@ require_once('header.php');
 		<div id="header">
 			<div id="header-container">
 				<div id="header-name" class="noselect" onclick="location.reload()">Camagru</div>
-				<?php load_header(); ?>
+				<?php load_header(''); ?>
 			</div>
 		</div>
 		<div id="content"></div>

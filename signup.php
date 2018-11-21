@@ -1,11 +1,7 @@
 <?php
 
-// DEBUGGING
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
+require_once('verify_data.php');
 
 if (isset($_POST['store'])) {
 	$_SESSION['firstname'] = $_POST['firstname'];
@@ -41,15 +37,8 @@ if (isset($verified)) {
 	unset($_SESSION['password']);
 }
 
-$stmt = $dbh->prepare("SELECT COUNT(`username`) FROM `users` WHERE `username` = :username;");
-$stmt->bindParam(':username', $_SESSION['username']);
-$stmt->execute();
-$username_count = $stmt->fetch()[0];
-
-$stmt = $dbh->prepare("SELECT COUNT(`email`) FROM `users` WHERE `email` = :email;");
-$stmt->bindParam(':email', $_SESSION['email']);
-$stmt->execute();
-$email_count = $stmt->fetch()[0];
+$username_count = usernameExists($_SESSION['username']);
+$email_count = emailExists($_SESSION['email']);
 
 if ($username_count == 0 && $email_count == 0)
 	echo '0';

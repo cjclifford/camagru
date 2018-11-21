@@ -11,7 +11,7 @@ $stmt = $dbh->prepare("SELECT `password` FROM `users` WHERE `username` = :userna
 $stmt->bindParam(':username', $username, PDO::PARAM_STR);
 $stmt->execute();
 $hash = $stmt->fetch(PDO::FETCH_ASSOC)['password'];
-if (hash('sha256', $password) == $hash) {
+if (hash('sha256', $password) == strtolower($hash)) {
 	$_SESSION['user'] = $username;
 	echo 'true';
 }

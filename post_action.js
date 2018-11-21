@@ -3,7 +3,10 @@ function like(post) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			location.reload();
+			if (this.responseText == "false")
+				loadDoc('signup');
+			else
+				location.reload();
 		}
 	}
 	xhttp.open("POST", "like.php");
@@ -21,8 +24,8 @@ function comment(post) {
 			if (this.readyState == 4 && this.status == 200) {
 				if (this.responseText == "false")
 					loadDoc('signup');
-				location.reload();
-				console.log(this.responseText);
+				else
+					location.reload();
 			}
 		}
 		xhttp.open("POST", "comment.php");
