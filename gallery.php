@@ -1,4 +1,7 @@
 <?php
+ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
+error_reporting(-1);
 
 session_start();
 require_once('config/database.php');
@@ -6,7 +9,16 @@ require_once('config/database.php');
 $stmt = $dbh->prepare("SELECT * FROM `posts`
 	INNER JOIN `users` ON `posts`.`fk_id_user` = `users`.`id_user`;");
 $stmt->execute();
-$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+print_r($stmt->fetchAll(PDO::FETCH_ASSOC));
+if (!isset($_SESSION['page']))
+	$_SESSION['page'] == 1;
+for ($i = 0; $i < 2; $i++) {
+	if (!isset($posts))
+		$posts = $stmt->fetch()[$i + (int)$_SESSION['page']];
+	else
+		$posts = array_push($posts, $stmt->fetch()[$i + (int)$_SESSION['page']]);
+}
+
 
 $stmt = $dbh->prepare("SELECT * FROM `comments`
 	INNER JOIN `posts` ON `comments`.`fk_id_post` = `posts`.`id_post`
@@ -49,7 +61,7 @@ foreach ($posts as $post) {
 		$fragment = $xml->createDocumentFragment();
 		if ($comment['fk_id_post'] == $post['id_post']) {
 			$fragment->appendXML("<b>".$comment['username']."</b> ");
-			$fragment->appendXML($comment['comment']."<br/>");
+			$fragment->appendXML(htmlspecialchars($comment['comment'])."<br/>");
 			$element->appendChild($fragment);
 		}
 	}

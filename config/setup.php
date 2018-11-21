@@ -47,7 +47,7 @@ $stmt = "CREATE TABLE IF NOT EXISTS `$DB_NAME`.`posts` (
 	`image_path` VARCHAR(255),
 	`like_count` INT DEFAULT 0,
 	`timestamp` DATETIME NOT NULL DEFAULT current_timestamp,
-	`fk_id_user` INT REFERENCES `user`(`id_user`)
+	`fk_id_user` INT REFERENCES `users`(`id_user`)
 );";
 $dbh->exec($stmt);
 
@@ -57,8 +57,8 @@ $dbh->exec($stmt);
 $stmt = "CREATE TABLE IF NOT EXISTS `$DB_NAME`.`comments` (
 	`comment` TEXT NOT NULL,
 	`timestamp` DATETIME NOT NULL DEFAULT current_timestamp,
-	`fk_id_user` INT REFERENCES `user`(`id_user`),
-	`fk_id_post` INT REFERENCES `user`(`id_post`)
+	`fk_id_user` INT REFERENCES `users`(`id_user`),
+	`fk_id_post` INT REFERENCES `users`(`id_post`)
 );";
 $dbh->exec($stmt);
 
@@ -66,8 +66,8 @@ $dbh->exec($stmt);
 ** Likes Table
 */
 $stmt = "CREATE TABLE IF NOT EXISTS `$DB_NAME`.`likes` (
-	`fk_id_user` INT REFERENCES `user`(`id_user`),
-	`fk_id_post` INT REFERENCES `user`(`id_post`)
+	`fk_id_user` INT REFERENCES `users`(`id_user`),
+	`fk_id_post` INT REFERENCES `users`(`id_post`)
 );";
 $dbh->exec($stmt);
 
@@ -77,6 +77,15 @@ $dbh->exec($stmt);
 $stmt = "CREATE TABLE IF NOT EXISTS `$DB_NAME`.`stickers` (
 	`id_sticker` INT PRIMARY KEY AUTO_INCREMENT,
 	`sticker_path` VARCHAR(255)
+);";
+$dbh->exec($stmt);
+
+/*
+** Token Table
+*/
+$stmt = "CREATE TABLE IF NOT EXISTS `$DB_NAME`.`tokens` (
+	`token` VARCHAR(6) NOT NULL,
+	`username` VARCHAR(255)
 );";
 $dbh->exec($stmt);
 

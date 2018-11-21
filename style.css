@@ -133,6 +133,8 @@ body {
 }
 .post-comments {
 	width: 100%;
+	word-wrap: break-word;
+	white-space: pre-wrap;
 }
 #post-comment {
 	position: absolute;
@@ -242,6 +244,13 @@ body {
 }
 #preview-wrapper {
 	position: relative;
+}
+.input-field {
+	width: 150px;
+	height: 16px;
+	border: none;
+	padding-left: 6px;
+	outline: none;
 }
 
 @media only screen and (max-width: 686px) {

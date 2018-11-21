@@ -86,7 +86,7 @@ function validateSignup() {
 				}
 				if (response == "0") {
 					sendVerificationEmail(email);
-					loadDoc('verify');
+					document.getElementById('content').innerHTML = "<center><h1>Please check your email for a verification link</h1></center>";
 				}
 			}
 		};
@@ -99,43 +99,21 @@ function validateSignup() {
 
 function sendVerificationEmail(email) {
 	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			if (this.responseText != null)
-				console.log(this.responseText);
-		}
-	}
+	var token = Math.random().toString(36).toUpperCase().substr(2,6);
+	var link = "http://localhost:8080/Projects/camagru/verify_email.php?token=" + token;
+	createCodeToken(token);
+	var params = 'to=' + email + '&subject=Verification Code&txt=' + link;
+
 	xhttp.open("POST", "mail.php", true);
-	var code = Math.random().toString(36).toUpperCase().substr(2,6);
-
-	var expireDate = new Date();
-	expireDate.setMinutes(expireDate.getMinutes + 1);
-
-	document.cookie = "code="+code+";expires="+expireDate.toUTCString+";";
-	var params = 'to=' + email + '&subject=Verification Code&txt=' + code;
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send(params);
 }
 
-function validateUser() {
-	var cookies = document.cookie;
-	var cookieCode = cookies.split(';')[0].split('=')[1];
-	var code = document.getElementById('verification').value;
-	if (code == cookieCode) {
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				if (this.responseText != null)
-					console.log(this.responseText);
-				location.reload();
-			}
-		}
-		xhttp.open("POST", "signup.php", true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("verified=true");
-	}
-	else
-		document.getElementById('rsp-code').innerHTML = "Incorrect verification code";
+function createCodeToken(token) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "create_code_token.php");
+	xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhttp.send('token='+token);
 }
 
 function validateLogin() {
@@ -166,10 +144,12 @@ function changeUsername() {
 	else {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200)
-				;//location.reload();
-			else
-				document.getElementById('rsp-username').innerHTML = this.responseText;
+			if (this.readyState == 4 && this.status == 200) {
+				if (this.responseText == "error")
+					document.getElementById('rsp-username').innerHTML = "Username taken";
+				else
+					location.reload();
+			}
 		}
 		xhttp.open("POST", "change_username.php");
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -181,14 +161,16 @@ function changeEmail() {
 	var newEmail = document.getElementById('email').value;
 
 	if (!isValidEmail(newEmail))
-		document.getElementById('rsp-email').innerHTML = "Username must be unique, cannot contain more than 16 characters, must contain alpha-numeric characters, and cannot be prepended by spaces, hyphens or underscore characters";
+		document.getElementById('rsp-email').innerHTML = "Invalid email";
 	else {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200)
-				;// location.reload();
-			else
-				document.getElementById('rsp-email').innerHTML = this.responseText;
+			if (this.readyState == 4 && this.status == 200) {
+				if (this.responseText == "error")
+					document.getElementById('rsp-email').innerHTML = "Email already in use";
+				else
+					location.reload();
+			}
 		}
 		xhttp.open("POST", "change_email.php");
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -200,6 +182,10 @@ function changePassword() {
 	var oldPassword = document.getElementById('old-password').value;
 	var newPassword = document.getElementById('new-password').value;
 	var confirmPassword = document.getElementById('confirm-password').value;
+
+	document.getElementById('rsp-old-password').innerHTML = null;
+	document.getElementById('rsp-new-password').innerHTML = null;
+	document.getElementById('rsp-confirm-password').innerHTML = null;
 
 	if (!isValidPassword(newPassword))
 		document.getElementById('rsp-new-password').innerHTML = "Password must be at least 8 characters with at least one letter, one number and one special character [@$!%*#?&]";
@@ -225,5 +211,10 @@ function changePassword() {
 }
 
 function toggleNotifications() {
-	//
+	var notify = document.getElementById('notify').checked;
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "toggle_notifications.php");
+	xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhttp.send('notify=' + (notify == true ? 1 : 0));
 }

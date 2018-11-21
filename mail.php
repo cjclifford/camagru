@@ -3,11 +3,10 @@
 $to = $_POST['to'];
 $subject = $_POST['subject'];
 $txt = $_POST['txt'];
-$headers = "From: Camagru <noreply@camagru.africa>" . "\r\n";
-echo "[$to][$subject][$txt][$headers]";
+$headers = "From: Camagru" . "\r\n";
 
 try {
-	var_dump(mail($to,$subject,$txt,$headers));
+	mail($to,$subject,$txt,$headers);
 }
 catch(Exception $e) {
 	echo "Error sending email: " . $e->getMessage();

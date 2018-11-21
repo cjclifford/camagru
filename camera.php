@@ -11,6 +11,7 @@ require_once('header.php');
 	<title>Camagru</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="style.css?"<?php echo time(); ?> />
+	<link rel="shortcut icon" type="image/png" href="resources/icons/camera_icon.png"/>
 	<script src="auth.js"></script>
 	<script src="load_content.js"></script>
 </head>
