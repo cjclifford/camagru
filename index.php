@@ -25,7 +25,7 @@ else
 	<div id="container">
 		<div id="header">
 			<div id="header-container">
-				<div id="header-name" class="noselect" onclick="location.reload()">Camagru</div>
+				<div id="header-name" class="noselect" onclick="window.location = 'index.php'">Camagru</div>
 				<?php load_header(''); ?>
 			</div>
 		</div>

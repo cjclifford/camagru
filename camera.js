@@ -68,16 +68,19 @@ function canvasIsEmpty(canvasElement) {
 
 function upload() {
 	var img = canvas.toDataURL();
-	var stickers = Array.prototype.slice.call(document.querySelectorAll(".sticker"));
-	console.log(stickers);
+	var stickers_html = Array.prototype.slice.call(document.querySelectorAll(".sticker"));
+	var stickers_src = [];
+	for (var i = 0; i < stickers_html.length; i++)
+		stickers_src.push(stickers_html[i].src);
 	if (!canvasIsEmpty(canvas)) {
 		var xhttp = new XMLHttpRequest();
 		xhttp.open('POST', 'upload.php');
 		xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		var params = 'imageData=' + encodeURI(img);
-		params += '&stickers'+JSON.stringify(stickers);
-		console.log(JSON.stringify(stickers));
-		// xhttp.send(params);
+		params += '&stickers='+JSON.stringify(stickers_src);
+		xhttp.send(params);
+		resetPreview();
+		alert("Successfully uploaded image");
 	}
 }
 

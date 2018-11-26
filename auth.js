@@ -100,7 +100,7 @@ function validateSignup() {
 function sendVerificationEmail(email) {
 	var xhttp = new XMLHttpRequest();
 	var token = Math.random().toString(36).toUpperCase().substr(2,6);
-	var link = "http://localhost:8080/Projects/camagru/verify_email.php?token=" + token;
+	var link = "http://localhost:8080/www/camagru/verify_email.php?token=" + token;
 	createCodeToken(token);
 	var params = 'to=' + email + '&subject=Verification Code&txt=' + link;
 

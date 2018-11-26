@@ -221,6 +221,7 @@ body {
 	padding-left: 10px;
 }
 #editor-options-2 {
+	padding: 10px;
 	display: flex;
 	align-items: center;
 }
@@ -230,6 +231,7 @@ body {
 	height: 50px;
 	background: red;
 	margin: 10px 0;
+	margin-right: 10px;
 }
 #sticker-overlay {
 	position: absolute;
@@ -256,6 +258,17 @@ body {
 	line-height: 30px;
 	text-align: center;
 	color: black;
+}
+#file-upload {
+	margin-left: 10px;
+	height: 40px;
+}
+#delete {
+	position: absolute;
+	right: -28px;
+	display: none;
+	width: 24px;
+	height: 24px;
 }
 
 @media only screen and (max-width: 686px) {

@@ -92,7 +92,7 @@ $dbh->exec($stmt);
 // make some test users
 $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('mickey', 'mouse', 'mmouse', 'mmouse@clubhouse.com', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');");
 $stmt->execute();
-$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('cuan', 'clifford', 'ccliffor', 'ccliffor@student.wethinkcode.com', '5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8');");
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`users` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES ('willem', 'dafoe', 'wdafoe', 'wdafoe@gmail.com', '5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8');");
 $stmt->execute();
 
 // make some stickers
@@ -107,12 +107,15 @@ $stmt->execute();
 $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`stickers` (`sticker_path`) VALUES ('resources/stickers/overlay_wow.png');");
 $stmt->execute();
 
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post-1.png', 1);");
-// $stmt->execute();
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-post-2.png', 2);");
-// $stmt->execute();
-// $stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/posts/test-test-post-3.png', 1);");
-// $stmt->execute();
+// make some tests posts
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/test/test-post-1.jpeg', 1);");
+$stmt->execute();
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/test/test-post-2.jpeg', 2);");
+$stmt->execute();
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/test/test-post-3.jpeg', 2);");
+$stmt->execute();
+$stmt = $dbh->prepare("INSERT INTO `$DB_NAME`.`posts` (`image_path`, `fk_id_user`) VALUES ('resources/test/test-post-4.jpg', 1);");
+$stmt->execute();
 
 session_start();
 $_SESSION['user'] = 'mmouse';

@@ -18,8 +18,11 @@ if (isset($_POST['imageData'])) {
 	if (isset($_POST['webcam']))
 		imageflip($image, IMG_FLIP_HORIZONTAL);
 
-	if (isset($_POST['sticker']))
-		$image = superimpose($image, $_POST['sticker']);
+	if (isset($_POST['stickers'])) {
+		$stickers = json_decode($_POST['stickers']);
+		foreach ($stickers as $sticker)
+			$image = superimpose($image, $sticker);
+	}
 
 	session_start();
 	require_once('config/database.php');

@@ -1,15 +1,14 @@
 <?php
-ini_set('display_startup_errors', 1);
-ini_set('display_errors', 1);
-error_reporting(-1);
 
 session_start();
 require_once('config/database.php');
 
 $stmt = $dbh->prepare("SELECT * FROM `posts`
 	INNER JOIN `users` ON `posts`.`fk_id_user` = `users`.`id_user`
-	WHERE `id_post` > ((:page - 1) * 5) LIMIT 5;");
-$stmt->bindParam(':page', $_SESSION['page']);
+	ORDER BY `timestamp` DESC
+	LIMIT :page,5;");
+$page = (int)(($_SESSION['page'] - 1) * 5);
+$stmt->bindParam(':page', $page, PDO::PARAM_INT);
 $stmt->execute();
 $posts = $stmt->fetchAll();
 
@@ -41,6 +40,12 @@ foreach ($posts as $post) {
 	$fragment = $xml->createDocumentFragment();
 	$fragment->appendXML(date('d F Y', strtotime($post['timestamp'])));
 	$element->appendChild($fragment);
+	if ($post['username'] == $_SESSION['user']) {
+		$element = $xml->getElementById('delete');
+		$element->setAttribute('src', 'resources/icons/delete.png');
+		$element->setAttribute('onclick', 'deletePost(this)');
+		$element->setAttribute('style', 'display:initial');
+	}
 
 	$element = $xml->getElementById('likes');
 	$fragment = $xml->createDocumentFragment();
@@ -79,7 +84,7 @@ $pageCount = ceil($postCount / 5);
 
 for ($i = 1; $i <= $pageCount; $i++) {
 	$element = $xml->createElement('a');
-	$element->setAttribute('href', 'http://localhost/camagru-master/index.php?page='.$i);
+	$element->setAttribute('href', 'http://localhost:8080/www/camagru/index.php?page='.$i);
 	$div = $xml->createElement('div', $i);
 	$div->setAttribute('class', 'content-box page-link');
 	$element->appendChild($div);

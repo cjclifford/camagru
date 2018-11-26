@@ -19,7 +19,7 @@ require_once('header.php');
 	<div id="container">
 		<div id="header">
 			<div id="header-container">
-				<div id="header-name" class="noselect" onclick='document.location.href="./"'>Camagru</div>
+				<div id="header-name" class="noselect" onclick="window.location='index.php'">Camagru</div>
 				<?php load_header('camera'); ?>
 			</div>
 		</div>
