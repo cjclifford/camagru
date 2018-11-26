@@ -231,8 +231,6 @@ body {
 	background: red;
 	margin: 10px 0;
 }
-#reset-preview-button {
-}
 #sticker-overlay {
 	position: absolute;
 	top: 0;
@@ -240,7 +238,6 @@ body {
 	width: 100%;
 	height: 100%;
 	z-index: 0;
-	display: none;
 }
 #preview-wrapper {
 	position: relative;
@@ -251,6 +248,14 @@ body {
 	border: none;
 	padding-left: 6px;
 	outline: none;
+}
+.page-link {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	color: black;
 }
 
 @media only screen and (max-width: 686px) {

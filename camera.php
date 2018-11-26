@@ -29,7 +29,6 @@ require_once('header.php');
 				<div id="preview-wrapper">
 					<video id="webcam" autoplay="true"></video>
 					<canvas id="snapshot" width="640px" height="480px"></canvas>
-					<img id="sticker-overlay" src="" />
 				</div>
 				<div id="editor-options-1">
 					<button id="capture-button" onclick="snapshot()"></button>

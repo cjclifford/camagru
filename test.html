@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<div class="test">div1</div>
+		<div class="test">div2</div>
+		<div class="test">div3</div>
+		<div class="test">div4</div>
+		<div class="test">div5</div>
+		<button onclick="remove()">Remove</button>
+		<script>
+			function remove() {
+				document.querySelectorAll(".test").forEach(e => e.parentNode.removeChild(e));
+			}
+		</script>
+	</body>
+</html>

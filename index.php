@@ -4,6 +4,11 @@ session_start();
 
 require_once('header.php');
 
+if (!isset($_GET['page']))
+	$_SESSION['page'] = 1;
+else
+	$_SESSION['page'] = $_GET['page'];
+
 ?>
 <!DOCTYPE html>
 <html>

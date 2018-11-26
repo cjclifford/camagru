@@ -56,7 +56,7 @@ function snapshot() {
 function resetPreview() {
 	document.getElementById('snapshot').style.display = 'none';
 	document.getElementById('webcam').style.display = 'initial';
-	setSticker();
+	addSticker();
 }
 
 function canvasIsEmpty(canvasElement) {
@@ -68,26 +68,39 @@ function canvasIsEmpty(canvasElement) {
 
 function upload() {
 	var img = canvas.toDataURL();
-	var sticker = document.getElementById('sticker-overlay');
+	var stickers = Array.prototype.slice.call(document.querySelectorAll(".sticker"));
+	console.log(stickers);
 	if (!canvasIsEmpty(canvas)) {
 		var xhttp = new XMLHttpRequest();
 		xhttp.open('POST', 'upload.php');
 		xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		var params = 'imageData=' + encodeURI(img);
-		if (sticker.src.includes('.png'))
-			params += '&sticker=' + sticker.src;
-		xhttp.send(params);
+		params += '&stickers'+JSON.stringify(stickers);
+		console.log(JSON.stringify(stickers));
+		// xhttp.send(params);
 	}
 }
 
-function setSticker(sticker) {
-	var canvas = document.getElementById('sticker-overlay');
-	if (sticker == null) {
-		canvas.src = "";
-		canvas.style.display = 'none';
-	}
+function addSticker(sticker) {
+	
+	if (sticker == null) 
+	document.querySelectorAll(".sticker").forEach(sticker => sticker.remove());
 	else {
-		canvas.src = sticker.src;
-		canvas.style.display = 'initial';
+		var stickers = document.querySelectorAll(".sticker");
+		var show = true;
+		for (var i = 0; i < stickers.length; i++) {
+			if (stickers[i].src == sticker.src) {
+				stickers[i].remove();
+				show = false;
+			}
+		}
+		if (show) {
+			var parent = document.getElementById('preview-wrapper');
+			var stickerOverlay = document.createElement('img');
+			stickerOverlay.setAttribute('id', 'sticker-overlay');
+			stickerOverlay.setAttribute('class', 'sticker');
+			stickerOverlay.setAttribute('src', sticker.src);
+			parent.appendChild(stickerOverlay);
+		}
 	}
 }

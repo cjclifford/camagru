@@ -7,4 +7,4 @@ $stmt->execute();
 $stickers = $stmt->fetchAll();
 
 for ($i = 0; $i < sizeof($stickers); $i++)
-	echo "<img id='".$i."' src='".$stickers[$i]['sticker_path']."' onclick='setSticker(this)' width='100px' height='100px'>";
+	echo "<img id='".$i."' src='".$stickers[$i]['sticker_path']."' onclick='addSticker(this)' width='100px' height='100px'>";

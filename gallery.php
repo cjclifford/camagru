@@ -7,18 +7,11 @@ session_start();
 require_once('config/database.php');
 
 $stmt = $dbh->prepare("SELECT * FROM `posts`
-	INNER JOIN `users` ON `posts`.`fk_id_user` = `users`.`id_user`;");
+	INNER JOIN `users` ON `posts`.`fk_id_user` = `users`.`id_user`
+	WHERE `id_post` > ((:page - 1) * 5) LIMIT 5;");
+$stmt->bindParam(':page', $_SESSION['page']);
 $stmt->execute();
-print_r($stmt->fetchAll(PDO::FETCH_ASSOC));
-if (!isset($_SESSION['page']))
-	$_SESSION['page'] == 1;
-for ($i = 0; $i < 2; $i++) {
-	if (!isset($posts))
-		$posts = $stmt->fetch()[$i + (int)$_SESSION['page']];
-	else
-		$posts = array_push($posts, $stmt->fetch()[$i + (int)$_SESSION['page']]);
-}
-
+$posts = $stmt->fetchAll();
 
 $stmt = $dbh->prepare("SELECT * FROM `comments`
 	INNER JOIN `posts` ON `comments`.`fk_id_post` = `posts`.`id_post`
@@ -53,7 +46,7 @@ foreach ($posts as $post) {
 	$fragment = $xml->createDocumentFragment();
 	$fragment->appendXML($post['like_count']." like");
 	if ($post['like_count'] != 1)
-		$fragment->appendXML("s");
+		$fragment->appendXML('s');
 	$element->appendChild($fragment);
 
 	$element = $xml->getElementById('post-comments');
@@ -78,4 +71,20 @@ foreach ($posts as $post) {
 
 	$html .= $xml->saveHTML();
 }
+$xml = new DOMDocument();
+$stmt = $dbh->prepare("SELECT COUNT(*) FROM `posts`;");
+$stmt->execute();
+$postCount = $stmt->fetch()[0];
+$pageCount = ceil($postCount / 5);
+
+for ($i = 1; $i <= $pageCount; $i++) {
+	$element = $xml->createElement('a');
+	$element->setAttribute('href', 'http://localhost/camagru-master/index.php?page='.$i);
+	$div = $xml->createElement('div', $i);
+	$div->setAttribute('class', 'content-box page-link');
+	$element->appendChild($div);
+	$xml->appendChild($element);
+}
+$html .= $xml->saveHTML();
+
 echo $html;
