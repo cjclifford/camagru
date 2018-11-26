@@ -41,6 +41,8 @@ if (isset($_POST['imageData'])) {
 	$stmt->execute();
 	$id_post = $stmt->fetch()['0'];
 
+	if (!file_exists('./resources/posts'))
+		mkdir('./resources/posts');
 	$path = "./resources/posts/$id_post-".time().".png";
 	imagepng($image, $path);
 
